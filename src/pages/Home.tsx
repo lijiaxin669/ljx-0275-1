@@ -32,7 +32,7 @@ export default function Home() {
         rel="stylesheet"
       />
 
-      <div className="absolute inset-0" onClick={handleCanvasClick}>
+      <div className="absolute inset-0">
         <Suspense
           fallback={
             <div className="w-full h-full flex items-center justify-center">
@@ -40,7 +40,7 @@ export default function Home() {
             </div>
           }
         >
-          <PanoramaCanvas />
+          <PanoramaCanvas onCanvasClick={handleCanvasClick} />
         </Suspense>
       </div>
 
@@ -52,13 +52,20 @@ export default function Home() {
 
       <div className="fixed bottom-4 right-4 z-30 hidden md:block">
         <div
-          className="px-3 py-2 rounded-lg text-[10px] text-white/30"
+          className="px-4 py-3 rounded-xl text-xs text-white/70 max-w-xs"
           style={{
-            backdropFilter: "blur(8px)",
-            backgroundColor: "rgba(15,25,15,0.4)",
+            backdropFilter: "blur(12px)",
+            backgroundColor: "rgba(15,25,15,0.6)",
+            border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
-          点击地面标记查看设施信息
+          <div className="font-medium text-white/90 mb-1">使用说明</div>
+          <div className="space-y-1">
+            <div>• 拖动鼠标可 360° 旋转全景视角</div>
+            <div>• 点击地面上的<span className="text-white font-bold">彩色标记点</span>查看设施详情</div>
+            <div>• 标记点显示洗手点、急救站、停车场等设施</div>
+            <div>• 点击卡片外空白处可关闭详情</div>
+          </div>
         </div>
       </div>
     </div>

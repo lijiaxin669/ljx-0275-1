@@ -9,6 +9,14 @@ import type { FaceId, LodLevel } from "@/types/pano"
 import HotspotSprite from "./HotspotSprite"
 
 const FACE_INDEX: FaceId[] = ["px", "nx", "py", "ny", "pz", "nz"]
+const FACE_COLORS: Record<FaceId, number> = {
+  px: 0x4a7c59,
+  nx: 0x3d6b4e,
+  py: 0x87CEEB,
+  ny: 0x5a8f4a,
+  pz: 0x6b9e5a,
+  nz: 0x4a7043,
+}
 
 function PanoCube() {
   const meshRef = useRef<THREE.Mesh>(null)
@@ -18,21 +26,24 @@ function PanoCube() {
   const sceneId = usePanoStore((s) => s.sceneId)
   const faceStates = usePanoStore((s) => s.faceStates)
   const setFaceLodLoaded = usePanoStore((s) => s.setFaceLodLoaded)
-  const setFaceTargetLod = usePanoStore((s) => s.setFaceTargetLod)
   const setLoadingProgress = usePanoStore((s) => s.setLoadingProgress)
   const setSceneLoaded = usePanoStore((s) => s.setSceneLoaded)
-  const meta = usePanoStore((s) => s.meta)
 
   const geometry = useMemo(() => {
     return new THREE.BoxGeometry(1000, 1000, 1000)
   }, [])
 
   const materials = useMemo(() => {
-    return FACE_INDEX.map((face) => {
-      const mat = new THREE.MeshBasicMaterial({ side: THREE.BackSide })
-      materialsRef.current.push(mat)
-      return mat
-    })
+    const mats: THREE.MeshBasicMaterial[] = []
+    materialsRef.current = mats
+    for (const face of FACE_INDEX) {
+      const mat = new THREE.MeshBasicMaterial({
+        side: THREE.BackSide,
+        color: FACE_COLORS[face],
+      })
+      mats.push(mat)
+    }
+    return mats
   }, [])
 
   const loadFace = useCallback(
@@ -46,6 +57,7 @@ function PanoCube() {
         if (idx >= 0 && materialsRef.current[idx]) {
           const oldTexture = materialsRef.current[idx].map
           materialsRef.current[idx].map = texture
+          materialsRef.current[idx].color.set(0xffffff)
           materialsRef.current[idx].needsUpdate = true
           if (oldTexture) oldTexture.dispose()
           loadedFacesRef.current.add(key)
@@ -57,6 +69,7 @@ function PanoCube() {
         if (idx >= 0 && materialsRef.current[idx]) {
           const oldTexture = materialsRef.current[idx].map
           materialsRef.current[idx].map = demoTexture
+          materialsRef.current[idx].color.set(0xffffff)
           materialsRef.current[idx].needsUpdate = true
           if (oldTexture) oldTexture.dispose()
           loadedFacesRef.current.add(key)
@@ -91,11 +104,6 @@ function PanoCube() {
         if (state.loading && state.targetLod > state.currentLod) {
           loadFace(face, state.targetLod)
         }
-        if (state.targetLod < state.currentLod && state.currentLod > 0) {
-          const key = `${face}_${state.currentLod}`
-          loadedFacesRef.current.delete(key)
-          loadFace(face, state.targetLod)
-        }
       }
     }, 500)
     return () => clearInterval(interval)
@@ -126,12 +134,17 @@ function CameraTracker() {
   return null
 }
 
-function SceneLighting() {
-  return <ambientLight intensity={1} />
-}
-
-export default function PanoramaCanvas() {
+export default function PanoramaCanvas({
+  onCanvasClick,
+}: {
+  onCanvasClick?: () => void
+}) {
   const meta = usePanoStore((s) => s.meta)
+
+  const handlePointerMissed = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation()
+    onCanvasClick?.()
+  }
 
   return (
     <Canvas
@@ -140,10 +153,11 @@ export default function PanoramaCanvas() {
         antialias: true,
         toneMapping: THREE.NoToneMapping,
         outputColorSpace: THREE.SRGBColorSpace,
+        powerPreference: "high-performance",
       }}
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "100%", background: "#1a2a1a" }}
+      onPointerMissed={handlePointerMissed}
     >
-      <SceneLighting />
       <PanoCube />
       <CameraTracker />
       {meta?.hotspots.map((hotspot) => (
@@ -158,6 +172,7 @@ export default function PanoramaCanvas() {
         maxDistance={0.01}
         dampingFactor={0.1}
         enableDamping={true}
+        makeDefault
       />
     </Canvas>
   )

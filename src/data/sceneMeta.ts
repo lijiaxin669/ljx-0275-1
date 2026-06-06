@@ -8,7 +8,7 @@ export const DEMO_SCENE_META: SceneMeta = {
   hotspots: [
     {
       id: "restroom-1",
-      position: [120, -80, -200],
+      position: [120, 0, -200],
       type: "restroom",
       name: "洗手点 A",
       walkMinutes: 2,
@@ -16,7 +16,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "restroom-2",
-      position: [-250, -80, 100],
+      position: [-200, 0, -150],
       type: "restroom",
       name: "洗手点 B",
       walkMinutes: 4,
@@ -24,7 +24,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "firstaid-1",
-      position: [50, -80, 300],
+      position: [0, 30, -300],
       type: "firstaid",
       name: "急救站",
       walkMinutes: 3,
@@ -32,7 +32,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "parking-1",
-      position: [350, -80, -50],
+      position: [300, -50, -100],
       type: "parking",
       name: "停车场",
       walkMinutes: 5,
@@ -40,7 +40,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "playground-1",
-      position: [-150, -80, -250],
+      position: [-100, -30, -280],
       type: "playground",
       name: "儿童游乐场",
       walkMinutes: 3,
@@ -48,7 +48,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "campsite-1",
-      position: [-300, -80, -150],
+      position: [-280, 20, -50],
       type: "campsite",
       name: "露营区",
       walkMinutes: 6,
@@ -56,7 +56,7 @@ export const DEMO_SCENE_META: SceneMeta = {
     },
     {
       id: "food-1",
-      position: [200, -80, 180],
+      position: [180, 50, -200],
       type: "food",
       name: "餐饮区",
       walkMinutes: 2,
