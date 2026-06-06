@@ -1,0 +1,64 @@
+{
+  "sceneId": "camp",
+  "name": "郊野亲子营地",
+  "maxLod": 2,
+  "faces": ["px", "nx", "py", "ny", "pz", "nz"],
+  "hotspots": [
+    {
+      "id": "restroom-1",
+      "position": [120, -80, -200],
+      "type": "restroom",
+      "name": "洗手点 A",
+      "walkMinutes": 2,
+      "description": "营地东侧洗手点，提供冷热水、婴儿换尿布台。24小时开放。"
+    },
+    {
+      "id": "restroom-2",
+      "position": [-250, -80, 100],
+      "type": "restroom",
+      "name": "洗手点 B",
+      "walkMinutes": 4,
+      "description": "营地西侧洗手点，靠近露营区。含无障碍卫生间。"
+    },
+    {
+      "id": "firstaid-1",
+      "position": [50, -80, 300],
+      "type": "firstaid",
+      "name": "急救站",
+      "walkMinutes": 3,
+      "description": "营地中央急救站，配备 AED、急救药品和专业医护人员。紧急电话 120。"
+    },
+    {
+      "id": "parking-1",
+      "position": [350, -80, -50],
+      "type": "parking",
+      "name": "停车场",
+      "walkMinutes": 5,
+      "description": "主停车场，可容纳 200 辆车。设有充电桩和家庭停车位。"
+    },
+    {
+      "id": "playground-1",
+      "position": [-150, -80, -250],
+      "type": "playground",
+      "name": "儿童游乐场",
+      "walkMinutes": 3,
+      "description": "适合 3-12 岁儿童的自然探索乐园，含沙坑、攀爬网、滑梯。"
+    },
+    {
+      "id": "campsite-1",
+      "position": [-300, -80, -150],
+      "type": "campsite",
+      "name": "露营区",
+      "walkMinutes": 6,
+      "description": "帐篷与房车露营区，提供水电接口、烧烤架。需提前预约。"
+    },
+    {
+      "id": "food-1",
+      "position": [200, -80, 180],
+      "type": "food",
+      "name": "餐饮区",
+      "walkMinutes": 2,
+      "description": "营地餐厅与小吃摊，提供亲子套餐。营业时间 7:00-21:00。"
+    }
+  ]
+}

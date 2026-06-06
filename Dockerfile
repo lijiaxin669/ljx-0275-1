@@ -1,0 +1,19 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY api ./api
+COPY --from=builder /app/dist ./dist
+COPY public ./public
+
+RUN mkdir -p tmp/uploads
+
+EXPOSE 3001
+CMD ["node", "--import", "tsx", "api/server.ts"]
